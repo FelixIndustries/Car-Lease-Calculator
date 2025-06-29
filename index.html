@@ -7,18 +7,57 @@
   <title>Lease Deal Checker</title>
   <link rel="manifest" href="manifest.json">
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; }
+    body { 
+      margin: 0; 
+      font-family: Arial, sans-serif;
+      background: #f8faff;
+    }
     #loading { 
       display: flex; 
+      flex-direction: column;
       justify-content: center; 
       align-items: center; 
       height: 100vh; 
-      background: #f5f5f5;
+      font-size: 18px;
+      color: #1976d2;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #1976d2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <div id="loading">Loading Lease Calculator...</div>
+  <div id="loading">
+    <div class="spinner"></div>
+    Loading Lease Calculator...
+  </div>
+  
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: null,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+            document.getElementById('loading').style.display = 'none';
+          });
+        }
+      });
+    });
+  </script>
   <script src="flutter.js" defer></script>
 </body>
 </html>
